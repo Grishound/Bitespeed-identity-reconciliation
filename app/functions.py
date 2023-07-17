@@ -4,41 +4,34 @@ from flask import jsonify
 from datetime import datetime
 import pytz
 
+
 def get_current_time():
-    '''
+    """
     Return the current time with IST timezone.
-    '''
+    """
     timeStamp = datetime.now().timestamp()
 
     # assigning the timezone to the current timestamp
-    currentDateTime = datetime.fromtimestamp(timeStamp, pytz.timezone('Asia/Kolkata'))
+    currentDateTime = datetime.fromtimestamp(timeStamp, pytz.timezone("Asia/Kolkata"))
     return currentDateTime
 
+
 def get_existing_primary_contacts(**kwargs):
-    '''
+    """
     Return all the primary contacts which match the query.
-    If a secondary contact matches the query, its linked primary contact will be added. 
-    '''
-    email = kwargs.get('email')
-    phone_number = kwargs.get('phone_number')
+    If a secondary contact matches the query, its linked primary contact will be added.
+    """
+    email = kwargs.get("email")
+    phone_number = kwargs.get("phone_number")
     if email and phone_number:
         matchingContacts = Contact.query.filter(
-            or_(
-                Contact.phoneNumber == phone_number,
-                Contact.email == email
-            )
+            or_(Contact.phoneNumber == phone_number, Contact.email == email)
         ).all()
     elif email:
-        matchingContacts = Contact.query.filter(
-            or_(
-                Contact.email == email
-            )
-        ).all()
+        matchingContacts = Contact.query.filter(or_(Contact.email == email)).all()
     elif phone_number:
         matchingContacts = Contact.query.filter(
-            or_(
-                Contact.phoneNumber == phone_number
-            )
+            or_(Contact.phoneNumber == phone_number)
         ).all()
     else:
         # this can never happen
@@ -59,16 +52,17 @@ def get_existing_primary_contacts(**kwargs):
 
     return result
 
+
 def return_response(primary_contact, secondary_contacts):
-    '''
+    """
     Returns the JSON response for the query.
-    '''
+    """
     response = {
         "contact": {
             "primaryContactId": primary_contact.id,
             "emails": [primary_contact.email] if primary_contact.email else [],
             "phoneNumbers": [primary_contact.phoneNumber] if primary_contact.phoneNumber else [],
-            "secondaryContactIds": [contact.id for contact in secondary_contacts]
+            "secondaryContactIds": [contact.id for contact in secondary_contacts],
         }
     }
     emailSet = set()

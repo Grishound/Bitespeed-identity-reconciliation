@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     phoneNumber = db.Column(db.String, nullable=True)

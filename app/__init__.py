@@ -7,8 +7,8 @@ from flask_json import FlaskJSON
 app = Flask(__name__)
 
 
-#render database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+# render database
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
 db.init_app(app)
 FlaskJSON(app)
