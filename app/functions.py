@@ -4,7 +4,6 @@ from flask import jsonify
 from datetime import datetime
 import pytz
 
-#todo : add timezone
 def get_current_time():
     '''
     Return the current time with IST timezone.

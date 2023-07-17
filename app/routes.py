@@ -12,11 +12,10 @@ def identify_contact():
     # Check if the incoming request has any existing contacts
     if not email and not phone_number:
         # no phone_number or email provided.
-        # abort(404, message="Neither email nor phoneNumber present.")
         return jsonify({"message": "Neither email nor phoneNumber present."}), 404
 
     elif not email:
-        # only phone_number present
+        # only phone_number provided
         existing_primary_contacts = get_existing_primary_contacts(phone_number=phone_number)
 
         if not existing_primary_contacts:
@@ -37,7 +36,7 @@ def identify_contact():
             secondary_contacts = Contact.query.filter_by(linkedId=primary_contact.id).all()
 
     elif not phone_number:
-        # only email present
+        # only email provided
         existing_primary_contacts = get_existing_primary_contacts(email=email)
 
         if not existing_primary_contacts:
