@@ -6,7 +6,6 @@ from flask_json import FlaskJSON
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 #render database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
