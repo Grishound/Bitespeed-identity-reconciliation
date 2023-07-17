@@ -10,7 +10,3 @@ db.init_app(app)
 FlaskJSON(app)
 
 from app import routes
-
-# Create the database tables
-with app.app_context():
-    db.create_all()
